@@ -74,13 +74,35 @@ $("#ajax-typeahead").typeahead({
 			// We good!
 			return data.mylist;
 		}
-	}
+	},
+
 });
+
+// example for autocomplete comma-separated tag list
+$('#id_tags').typeahead({
+		ajax: {
+				url: "/json/get_tags/",
+				method: "get",
+		},
+		select: function () {
+				var val = this.$menu.find('.active').attr('data-value')
+				this.$element
+						.val(this.$element.val() + this.updater(val))
+						.change()
+				return this.hide()
+		},
+		updater: function(item){
+				var val = this.$element.val().
+						split(',').
+						slice(0, -1).
+						map(function (e) { return e.trim(); });
+				return val.concat([item]).join(', ') + ', '
+		},
+		getQuery: function(){
+				return this.$element.val().split(',').pop().trim();
+		}
+}); 
+
 ```
 
 Enjoy!
- 
-Contact
--------
-
-pwarelis at gmail dot com
