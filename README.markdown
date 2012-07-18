@@ -84,13 +84,6 @@ $('#id_tags').typeahead({
 				url: "/json/get_tags/",
 				method: "get",
 		},
-		select: function () {
-				var val = this.$menu.find('.active').attr('data-value')
-				this.$element
-						.val(this.$element.val() + this.updater(val))
-						.change()
-				return this.hide()
-		},
 		updater: function(item){
 				var val = this.$element.val().
 						split(',').
