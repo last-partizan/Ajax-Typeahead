@@ -37,6 +37,7 @@
 		this.sorter = this.options.sorter || this.sorter
 		this.highlighter = this.options.highlighter || this.highlighter
 		this.updater = this.options.updater || this.updater
+		this.getQuery = this.options.getQuery || this.getQuery
 		this.$menu = $(this.options.menu).appendTo('body')
 		if (this.options.ajax) {
 			var ajax = this.options.ajax;
@@ -65,6 +66,10 @@
 	Typeahead.prototype = {
 
 		constructor: Typeahead,
+
+		getQuery: function () {
+			return this.$element.val();
+		},
 
 		select: function () {
 			var val = this.$menu.find('.active').attr('data-value')
@@ -101,7 +106,7 @@
 
 		ajaxLookup: function () {
 	
-			var query = this.$element.val();
+			var query = this.getQuery();
 			
 			if (query == this.query) {
 				return this;
@@ -182,7 +187,7 @@
 		lookup: function (event) {
 			var that = this, items
 			
-			this.query = this.$element.val()
+			this.query = this.getQuery()
 			
 			if (!this.query) {
 				return this.shown ? this.hide() : this
